@@ -2,10 +2,7 @@ FROM python:3.10.13-alpine
 
 # Install system dependencies
 RUN apk update && \
-    apk add --no-cache sqlite sqlite-dev build-base gmp-dev gcc
-
-# Install additional system dependencies if needed
-# RUN apk add --no-cache additional-package1 additional-package2
+    apk add --no-cache sqlite sqlite-dev build-base gmp-dev gcc musl-dev hdf5 hdf5-dev
 
 # Use built-in pip to access poetry
 RUN pip install --upgrade pip
@@ -45,5 +42,3 @@ COPY . /app
 
 # Command to run the application
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "84"]
-
-
