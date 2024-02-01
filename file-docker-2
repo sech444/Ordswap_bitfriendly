@@ -1,0 +1,77 @@
+FROM python:3.10-alpine
+
+# Install system dependencies
+FROM python:3.10-alpine
+
+# Install system dependencies
+RUN apk update && apk add --no-cache sqlite sqlite-dev
+
+
+RUN apk add --no-cache build-base
+
+
+RUN apk add --no-cache gmp-dev  # Install GMP development package
+
+RUN addgroup -S app && adduser -S -G app app
+
+ENV PYTHONPATH=/usr/lib/python3.10/site-packages
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONDONTWRITEBYTECODE
+# Prevents Python from writing .pyc files to disk
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# ensures that the python output is sent straight to terminal (e.g. your container log)
+# without being first buffered and that you can see the output of your application (e.g. django logs)
+# in real time. Equivalent to python -u: https://docs.python.org/3/using/cmdline.html#cmdoption-u
+ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT prod
+ENV TESTING 0
+
+
+
+# use built-in pip to access poetry
+RUN pip install --progress-bar off "poetry==1.7.0"
+
+WORKDIR /app
+COPY README.md /app/
+
+# start installing things with poetry
+COPY ./pyproject.toml ./poetry.lock* /app/
+
+# Set CMAKE_BUILD_PARALLEL_LEVEL to limit the number of threads
+# Adjust the value (e.g., 2) based on the available resources and trial/error.
+ENV CMAKE_BUILD_PARALLEL_LEVEL 2
+#  Project initialization:
+RUN poetry config virtualenvs.create false && poetry install --no-interaction
+
+
+
+
+
+# Copy poetry.lock* in case it doesn't exist in the repo
+#COPY ./app/pyproject.toml ./app/poetry.lock* /app/
+
+# Allow installing dev dependencies to run tests
+ARG INSTALL_DEV=false
+
+RUN if [ "$INSTALL_DEV" = "true" ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi
+
+# For development, Jupyter remote kernel, Hydrogen
+# Using inside the container:
+# jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://127.0.0.1:8888
+ARG INSTALL_JUPYTER=false
+RUN if [ "$INSTALL_JUPYTER" = "true" ] ; then pip install jupyterlab ; fi
+
+ENV C_FORCE_ROOT=1
+
+WORKDIR /app
+COPY . /app
+
+
+ENV PYTHONPATH=/app
+
+# Expose the necessary port
+EXPOSE 84
+
+
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "84"]

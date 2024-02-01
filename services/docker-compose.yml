@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  bitfriendly:
+    build: ./bitfriendly/app
+    ports:
+      - 5000:5000
+    volumes:
+      - ./bitfriendly/app:/app
+    command: gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000 app.main:app
+
+  frontend:
+    build: ./frontend/app
+    volumes:
+      - './frontend/app:/usr/src/app'
+      - './frontend/app:/node_modules'
+    ports:
+      - 8080:8080

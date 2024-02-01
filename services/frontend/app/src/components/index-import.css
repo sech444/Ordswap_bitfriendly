@@ -1,0 +1,120 @@
+pre {
+    font-size: 16px
+}
+
+.loading-indicator.light .loader-dot {
+    background-color: #fff
+}
+
+.loading-indicator .loader-dot:nth-child(1) {
+    animation-delay: -.32s
+}
+
+.loading-indicator .loader-dot:nth-child(2) {
+    animation-delay: -.16s
+}
+
+@keyframes bouncedelay {
+    0%,
+    to,
+    80% {
+        transform: scale(0)
+    }
+    40% {
+        transform: scale(1)
+    }
+}
+
+.loading-indicator {
+    margin-top: 4px;
+    width: 70px;
+    text-align: center;
+    z-index: 9999
+}
+
+.loading-indicator .loader-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #a6a6a6;
+    border-radius: 100%;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    animation-fill-mode: both
+}
+
+.collection-view {
+    position: relative;
+    padding: 0 64px
+}
+
+.collection-header {
+    width: 100%;
+    max-width: 900px;
+    padding-top: 42px
+}
+
+.collection-avatar {
+    width: 180px;
+    height: 180px;
+    min-width: -moz-max-content;
+    min-width: max-content;
+    border: 2.5px solid #ffffff;
+    border-radius: 8px;
+    background: rgb(255, 255, 255);
+    overflow: hidden;
+    float: left;
+    margin-right: 1.25rem
+}
+
+.collection-avatar img {
+    inset: 0px;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    margin: auto;
+    display: block;
+    width: 0px;
+    height: 0px;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover
+}
+
+@media screen and (max-width: 1024px) {
+    .collection-avatar {
+        width: 90px;
+        height: 90px
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .collection-view {
+        padding: 0 16px
+    }
+}
+
+.collection-name {
+    font-style: normal;
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 56px;
+    display: flex;
+    align-items: center;
+    letter-spacing: .15em;
+    color: #fff;
+    margin-top: 32px
+}
+
+.collection-bio {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    letter-spacing: .1em;
+    margin-top: 24px
+}
