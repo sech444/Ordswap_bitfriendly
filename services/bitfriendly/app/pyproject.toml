@@ -40,7 +40,7 @@ cffi = "1.16.0"
 charset-normalizer = "3.3.2"
 click = "8.1.7"
 coincurve = "18.0.0"
-cryptography = "41.0.7"
+cryptography = "42.0.4"
 cryptotools = { git = "https://github.com/mcdallas/cryptotools.git", rev = "dbdced863bd2622f4cb41595df1ecad399760d78" }
 docstring-parser = "0.15"
 ecdsa = "0.17.0"
