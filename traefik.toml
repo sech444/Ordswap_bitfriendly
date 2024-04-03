@@ -1,0 +1,25 @@
+# traefik.toml
+
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = true
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[api]
+  dashboard = true
+
+[providers.docker]
+  exposedByDefault = false
+  network = "web"
+
+[certificatesResolvers.letsencrypt.acme]
+  email = "your-email@example.com"
+  storage = "/acme.json"
+  [certificatesResolvers.letsencrypt.acme.httpChallenge]
+    entryPoint = "web"
