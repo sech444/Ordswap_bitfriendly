@@ -31,7 +31,7 @@
         "@stacks/transactions": "^6.9.0",
         "@treverix/custom-electron-titlebar": "^4.1.6",
         "@vue/compat": "^3.4.5",
-        "ajv": "^6.12.6",
+        "ajv": "^8.18.0",
         "assert": "^2.1.0",
         "autoprefixer": "10.4.16",
         "axios": "^1.5.0",
